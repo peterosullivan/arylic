@@ -2,9 +2,7 @@
 
 export MASTER=192.168.0.30
 export GUEST=192.168.0.31
-export IP=192.168.0.30
 declare -A source_modes=([0]="Idling" [1]="airplay" [2]="DLNA" [10]="network content" [11]="USB disk" [20]="HTTPAPI" [31]="Spotify" [40]="Line-In" [41]="Bluetooth" [43]="Optical" [47]="Line-In" [51]="USB DAC" [99]="Guest Multiroom")
-
 
 check_status () {
   echo $1
