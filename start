@@ -1,0 +1,30 @@
+#!/bin/bash
+
+export MASTER=192.168.0.30
+export GUEST=192.168.0.31
+export IP=192.168.0.30
+declare -A source_modes=([0]="Idling" [1]="airplay" [2]="DLNA" [10]="network content" [11]="USB disk" [20]="HTTPAPI" [31]="Spotify" [40]="Line-In" [41]="Bluetooth" [43]="Optical" [47]="Line-In" [51]="USB DAC" [99]="Guest Multiroom")
+
+
+check_status () {
+  echo $1
+
+  DEVICE_STATUS=$(curl -s GET $1/httpapi.asp?command=getStatusEx /echo -H "Accept: */*")
+  PLAYER_STATUS=$(curl -s GET $1/httpapi.asp?command=getPlayerStatus /echo -H "Accept: */*")
+
+  jq -r '.DeviceName' <<< "$DEVICE_STATUS"
+  jq -r '.group' <<< "$DEVICE_STATUS" | sed 's/$/ group/'
+  jq -r '.master_uuid' <<< "$DEVICE_STATUS" | sed 's/$/ master id/'
+  SOURCE=$(jq -r '.mode' <<< "$PLAYER_STATUS")
+  echo "Source:" ${source_modes[$SOURCE]}
+  echo
+}
+
+set_source_multiroom () {
+  curl -X GET $MASTER/httpapi.asp?command=setPlayerCmd:switchmode:line-in /echo -H "Accept: */*"
+  curl -X GET $GUEST/httpapi.asp?command=ConnectMasterAp:JoinGroupMaster:eth$MASTER /echo -H "Accept: */*"
+}
+
+check_status ${MASTER}
+check_status ${GUEST}
+set_source_multiroom
