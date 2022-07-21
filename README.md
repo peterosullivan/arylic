@@ -1,5 +1,11 @@
 # Arylic multiroom setup
 
+## Prerequisite
+
+`sudo apt install curl`
+
+`sudo apt install jq`
+
 ## Copy files 
 
 `arylic_multiroom.service` and `multiroom.sh` to the right locations
@@ -14,5 +20,5 @@
 
 `sudo systemctl daemon-reload`
 
-`sudo systemctl enable disk-space-check.service`
+`sudo systemctl enable arylic_multiroom.service`
 
