@@ -3,7 +3,7 @@ Description=Arylic Multiroom setup
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/multiroom.sh
+ExecStart=-/usr/local/bin/multiroom.sh
 
 [Install]
 WantedBy=default.target
