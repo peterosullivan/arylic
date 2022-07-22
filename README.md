@@ -22,3 +22,4 @@
 
 `sudo systemctl enable arylic_multiroom.service`
 
+`sudo service arylic_multiroom.service enable`
